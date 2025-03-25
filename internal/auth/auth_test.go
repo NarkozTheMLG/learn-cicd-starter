@@ -1,40 +1,40 @@
 package auth
 
 import (
-        "errors"
+	"errors"
 	"net/http"
 	"testing"
 )
 
 func TestGetAPIKey(t *testing.T) {
 	tests := []struct {
-		name          string
-		authHeader    string
-		expectedKey   string
+		name           string
+		authHeader     string
+		expectedKey    string
 		expectingError error
 	}{
 		{
-			name:          "Valid API Key",
-			authHeader:    "ApiKey my-secret-key",
-			expectedKey:   "my-secret-key",
+			name:           "Valid API Key",
+			authHeader:     "ApiKey my-secret-key",
+			expectedKey:    "my-secret-key",
 			expectingError: nil,
 		},
 		{
-			name:          "Missing Authorization Header",
-			authHeader:    "",
-			expectedKey:   "",
+			name:           "Missing Authorization Header",
+			authHeader:     "",
+			expectedKey:    "",
 			expectingError: ErrNoAuthHeaderIncluded,
 		},
 		{
-			name:          "Invalid Authorization Format",
-			authHeader:    "Bearer my-secret-key",
-			expectedKey:   "",
+			name:           "Invalid Authorization Format",
+			authHeader:     "Bearer my-secret-key",
+			expectedKey:    "",
 			expectingError: errors.New("malformed authorization header"),
 		},
 		{
-			name:          "Missing ApiKey Token",
-			authHeader:    "ApiKey",
-			expectedKey:   "",
+			name:           "Missing ApiKey Token",
+			authHeader:     "ApiKey",
+			expectedKey:    "",
 			expectingError: errors.New("malformed authorization header"),
 		},
 	}
@@ -62,4 +62,3 @@ func TestGetAPIKey(t *testing.T) {
 		})
 	}
 }
-
